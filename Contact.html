@@ -5,288 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Yusong Liu's Portfolio</title>
     <link rel="stylesheet" href="ccs/style.css">
-    <style>
-        /* 全局样式重置 - 与其他页面保持一致 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        /* 导航栏样式 - 与其他页面完全一致 */
-        .navbar {
-            background-color: #2c3e50;
-            padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-        
-        .nav-logo a {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .nav-item {
-            margin-left: 2rem;
-        }
-        
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 0.5rem 0;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            color: #3498db;
-        }
-        
-        /* 主内容区域样式 */
-        .main-content {
-            padding: 2rem;
-        }
-        
-        /* 立方体容器样式 - 与其他页面一致 */
-        .wrap {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            perspective: 800px;
-            margin: 2rem 0;
-        }
-        
-        .cube {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            transform-style: preserve-3d;
-            animation: rotate 10s infinite linear;
-        }
-        
-        .face {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: rgba(52, 152, 219, 0.8);
-            border: 2px solid #2c3e50;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
-        }
-        
-        .front { transform: translateZ(50px); }
-        .back { transform: translateZ(-50px) rotateY(180deg); }
-        .top { transform: rotateX(90deg) translateZ(50px); }
-        .bottom { transform: rotateX(-90deg) translateZ(50px); }
-        .left { transform: rotateY(-90deg) translateZ(50px); }
-        .right { transform: rotateY(90deg) translateZ(50px); }
-        
-        @keyframes rotate {
-            0% { transform: rotateX(0) rotateY(0); }
-            100% { transform: rotateX(360deg) rotateY(360deg); }
-        }
-        
-        /* 标题样式 */
-        h1 {
-            text-align: center;
-            margin: 30px 0;
-            color: #2c3e50;
-            font-size: 2.5rem;
-        }
-        
-        /* 联系表单容器 - 调整为与其他页面相同的布局 */
-        .contact-container {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 40px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        /* 表单样式 - 与其他页面保持一致 */
-        form {
-            flex: 1;
-            min-width: 300px;
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-        }
-        
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        .form-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        button {
-            padding: 12px 24px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: background-color 0.3s;
-            flex: 1;
-        }
-        
-        button:hover {
-            background-color: #2980b9;
-        }
-        
-        button[type="reset"] {
-            background-color: #95a5a6;
-        }
-        
-        button[type="reset"]:hover {
-            background-color: #7f8c8d;
-        }
-        
-        /* 图片样式 - 确保正常显示 */
-        .contact-image {
-            flex: 1;
-            min-width: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .contact-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        /* 页脚样式 - 与其他页面完全一致 */
-        .footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: #3498db;
-        }
-        
-        /* 响应式设计 - 与其他页面保持一致 */
-        @media (max-width: 768px) {
-            .contact-container {
-                flex-direction: column;
-            }
-            
-            .contact-form, .contact-image {
-                width: 100%;
-            }
-            
-            .nav-container {
-                flex-direction: column;
-                padding: 1rem;
-            }
-            
-            .nav-menu {
-                margin-top: 1rem;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .nav-item {
-                margin: 0.5rem 0;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
 </head>
-<body>
-    <!-- 导航栏 -->
+<body class="contact-page">
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -295,15 +16,15 @@
             <ul class="nav-menu">
                 <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="Project.html" class="nav-link">Projects</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
+                <li class="nav-item"><a href="About.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="Contact.html" class="nav-link active">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- 主内容区域 -->
+    <!-- Main Content -->
     <main class="main-content">
-        <!-- 立方体动画 -->
+        <!-- Cube Animation -->
         <div class="wrap">
             <div class="cube">
                 <span class="face front">I Always</span>
@@ -318,7 +39,7 @@
         <h1>If You Want To Contact Me</h1>
         
         <div class="contact-container">
-            <form action="#" method="POST" enctype="multipart/form-data">
+            <form action="#" method="POST" enctype="multipart/form-data" class="contact-form">
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" placeholder="write your name here" required>
@@ -346,14 +67,16 @@
         </div>
     </main>
 
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2025 My Personal Portfolio. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" aria-label="GitHub">GitHub</a>
-                <a href="#" aria-label="LinkedIn">LinkedIn</a>
-                <a href="#" aria-label="Email">Email</a>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 My Personal Portfolio. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="GitHub">GitHub</a>
+                    <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                    <a href="#" aria-label="Email">Email</a>
+                </div>
             </div>
         </div>
     </footer>

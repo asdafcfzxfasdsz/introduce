@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation (consistent with index.html) -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -17,32 +17,20 @@
             <ul class="nav-menu">
                 <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="Project.html" class="nav-link">Projects</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link active">About</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="About.html" class="nav-link active">About</a></li>
+                <li class="nav-item"><a href="Contact.html" class="nav-link">Contact</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="main-content about-page">
+    <main class="main-content">
         <!-- Hero Section -->
         <section class="about-hero">
             <div class="container">
                 <div class="hero-content">
                     <h1>About Me</h1>
                     <p class="hero-subtitle">Manufacturing Management Professional & Engineering Leader</p>
-                </div>
-                <div class="hero-visual">
-                    <div class="animated-cube">
-                        <div class="cube rotate-x rotate-y">
-                            <span class="face front">Management</span>
-                            <span class="face back">Engineering</span>
-                            <span class="face top">Efficiency</span>
-                            <span class="face bottom">Quality</span>
-                            <span class="face left">Leadership</span>
-                            <span class="face right">Innovation</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -71,7 +59,7 @@
                         </div>
                     </div>
                     <div class="intro-image">
-                        
+                        <img src="img\photo.png" alt="Yusong Liu" class="profile-img">
                     </div>
                 </div>
             </div>
@@ -199,17 +187,6 @@
                         </tbody>
                     </table>
                 </div>
-                
-                <div class="performance-summary">
-                    <div class="summary-item">
-                        <h3>Technical Expertise</h3>
-                        <ul>
-                            <li>Strong foundation in mechanical engineering principles and manufacturing processes</li>
-                            <li>Proven ability to optimize production efficiency and quality control systems</li>
-                            <li>Experience in implementing manufacturing execution systems (MES) and process improvements</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -261,7 +238,7 @@
         </section>
     </main>
 
-    <!-- Footer (consistent with index.html) -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -274,5 +251,16 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // 技能条动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const level = bar.getAttribute('data-skill-level');
+                bar.style.width = level + '%';
+            });
+        });
+    </script>
 </body>
 </html>
