@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Yusong Liu's Portfolio</title>
+    <style>
+        /* === 基础重置与变量定义 === */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+        
+        /* === 导航栏样式 (与首页保持一致) === */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .nav-logo a {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 2rem;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--secondary-color);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* === 项目页面专属样式 === */
+        
+        /* 项目页面标题区域 */
+        .projects-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2530 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .projects-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+        
+        .projects-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .projects-hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* 项目筛选器 */
+        .projects-filter {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .filter-option {
+            margin: 0 1rem;
+            padding: 0.5rem 1.5rem;
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .filter-option:hover, .filter-option.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 非对称项目网格布局 */
+        .projects-container {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            align-items: start;
+        }
+        
+        /* 项目卡片 - 创新设计 */
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 为不同卡片添加独特旋转角度，创造非对称感 */
+        .project-card:nth-child(odd) {
+            transform: rotateZ(-1deg);
+        }
+        
+        .project-card:nth-child(even) {
+            transform: rotateZ(1deg);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) rotateZ(0deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+        
+        .project-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .project-meta {
+            display: flex;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .project-meta span {
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .project-meta i {
+            margin-right: 0.3rem;
+        }
+        
+        .project-description {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-tag {
+            background: #f1f2f6;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-link {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            transition: var(--transition);
+            align-self: flex-start;
+        }
+        
+        .project-link:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        /* 项目详情展开效果 */
+        .project-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .project-card.active .project-details {
+            max-height: 500px;
+            padding-top: 1rem;
+        }
+        
+        /* 页脚样式 (与首页保持一致) */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .projects-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .projects-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .projects-filter {
+                flex-wrap: wrap;
+            }
+            
+            .filter-option {
+                margin-bottom: 0.5rem;
+            }
+            
+            .project-card:nth-child(odd),
+            .project-card:nth-child(even) {
+                transform: none;
+            }
+            
+            .project-card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .social-links {
+                margin-top: 1rem;
+            }
+        }
+        
+        /* 动画关键帧 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-card {
+            animation: fadeInUp 0.5s ease both;
+        }
+        
+        /* 为每个卡片设置动画延迟，创造错落有致的出现效果 */
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-card:nth-child(5) { animation-delay: 0.5s; }
+        .project-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 (与首页保持一致) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">Yusong Liu's Portfolio</a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="Project.html" class="nav-link active">Projects</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 项目页面专属内容 -->
+    <section class="projects-hero">
+        <h1>My Engineering Projects</h1>
+        <p>Explore my manufacturing and engineering achievements, from production optimization to quality management systems</p>
+    </section>
+
+    <!-- 项目筛选器 -->
+    <div class="projects-filter">
+        <button class="filter-option active">All Projects</button>
+        <button class="filter-option">Production Management</button>
+        <button class="filter-option">Quality Systems</button>
+        <button class="filter-option">Process Optimization</button>
+    </div>
+
+    <!-- 项目网格 -->
+    <main class="projects-container">
+        <!-- 项目 1 -->
+        <article class="project-card">
+            <div class="project-image">
+                <img src="img\productionline.png" alt="Production Line Optimization">
+                <span class="project-badge">Featured</span>
+            </div>
+            <div class="project-info">
+                <h3>Production System Transformation</h3>
+                <div class="project-meta">
+                    <span><i class="far fa-calendar"></i> 2024</span>
+                    <span><i class="far fa-clock"></i> 6 months</span>
+                </div>
+                <p class="project-description">
+                    Comprehensive overhaul of manufacturing processes at CRRC Times Electric, implementing MES system improvements 
+                    and optimizing workflows to increase daily production capacity by 30%.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">MES Implementation</span>
+                    <span class="tech-tag">Process Optimization</span>
+                    <span class="tech-tag">Team Leadership</span>
+                </div>
+                <a href="project-details.html" class="project-link">View Case Study</a>
+            </div>
+        </article>
+
+        <!-- 项目 2 -->
+        <article class="project-card">
+            <div class="project-image">
+                <img src="img\quality.jpg" alt="Quality Management System">
+            </div>
+            <div class="project-info">
+                <h3>Quality Management Innovation</h3>
+                <div class="project-meta">
+                    <span><i class="far fa-calendar"></i> 2023-2024</span>
+                    <span><i class="far fa-clock"></i> 8 months</span>
+                </div>
+                <p class="project-description">
+                    Developed and implemented comprehensive quality control protocols that achieved 85.6% quality target 
+                    compliance across multiple production facilities while maintaining zero safety incidents.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Quality Control</span>
+                    <span class="tech-tag">Safety Systems</span>
+                    <span class="tech-tag">Compliance</span>
+                </div>
+                <a href="project-details.html" class="project-link">View Details</a>
+            </div>
+        </article>
+
+        <!-- 项目 3 -->
+        <article class="project-card">
+            <div class="project-image">
+                <img src="img\management.jpg" alt="Team Management System">
+                <span class="project-badge">Leadership</span>
+            </div>
+            <div class="project-info">
+                <h3>Workshop Management Excellence</h3>
+                <div class="project-meta">
+                    <span><i class="far fa-calendar"></i> 2022-2024</span>
+                    <span><i class="far fa-clock"></i> 2 years</span>
+                </div>
+                <p class="project-description">
+                    Led 90+ team members at TP-LINK, achieving 100% delivery rate through effective team management strategies, 
+                    performance monitoring, and continuous improvement initiatives.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Team Leadership</span>
+                    <span class="tech-tag">Performance Metrics</span>
+                    <span class="tech-tag">Efficiency</span>
+                </div>
+                <a href="project-details.html" class="project-link">View Case Study</a>
+            </div>
+        </article>
+
+        <!-- 项目 4 -->
+        <article class="project-card">
+            <div class="project-image">
+                <img src="img\auto.jpg" alt="Automation System">
+            </div>
+            <div class="project-info">
+                <h3>Automation Integration Project</h3>
+                <div class="project-meta">
+                    <span><i class="far fa-calendar"></i> 2023</span>
+                    <span><i class="far fa-clock"></i> 4 months</span>
+                </div>
+                <p class="project-description">
+                    Designed and implemented automated quality inspection systems that reduced manual inspection time by 40% 
+                    while improving detection accuracy by 15% through computer vision integration.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Automation</span>
+                    <span class="tech-tag">Computer Vision</span>
+                    <span class="tech-tag">Efficiency</span>
+                </div>
+                <a href="project-details.html" class="project-link">View Details</a>
+            </div>
+        </article>
+
+        <!-- 项目 5 -->
+        <article class="project-card">
+            <div class="project-image">
+                <img src="img\supply.png" alt="Supply Chain Optimization">
+                <span class="project-badge">Innovation</span>
+            </div>
+            <div class="project-info">
+                <h3>Supply Chain Optimization</h3>
+                <div class="project-meta">
+                    <span><i class="far fa-calendar"></i> 2022</span>
+                    <span><i class="far fa-clock"></i> 5 months</span>
+                </div>
+                <p class="project-description">
+                    Streamlined material flow and inventory management processes, reducing lead times by 25% and cutting 
+                    inventory carrying costs by 18% through just-in-time implementation strategies.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Supply Chain</span>
+                    <span class="tech-tag">Inventory Management</span>
+                    <span class="tech-tag">Cost Reduction</span>
+                </div>
+                <a href="project-details.html" class="project-link">View Case Study</a>
+            </div>
+        </article>
+
+        <!-- 项目 6 -->
+        <article class="project-card">
+            <div class="project-image">
+                <img src="img\operator.png" alt="Training System Development">
+            </div>
+            <div class="project-info">
+                <h3>Operator Training System</h3>
+                <div class="project-meta">
+                    <span><i class="far fa-calendar"></i> 2021-2022</span>
+                    <span><i class="far fa-clock"></i> 10 months</span>
+                </div>
+                <p class="project-description">
+                    Developed comprehensive training programs for manufacturing operators, reducing onboarding time by 30% 
+                    and improving standard operating procedure adherence by 45% across all shifts.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Training</span>
+                    <span class="tech-tag">Documentation</span>
+                    <span class="tech-tag">Standardization</span>
+                </div>
+                <a href="project-details.html" class="project-link">View Details</a>
+            </div>
+        </article>
+    </main>
+
+    <!-- 页脚 (与首页保持一致) -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Yusong Liu's Professional Portfolio. All rights reserved.</p>
+            <div class="social-links">
+                <a href="tel:15181266270" aria-label="Phone"><i class="fas fa-phone"></i></a>
+                <a href="mailto:1042565975@qq.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a href="#" aria-label="Professional Profile"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-option');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 更新活跃按钮
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 简单的筛选逻辑（实际项目中可更复杂）
+                    const filterValue = this.textContent;
+                    
+                    projectCards.forEach(card => {
+                        if (filterValue === 'All Projects') {
+                            card.style.display = 'block';
+                        } else {
+                            // 简化筛选逻辑 - 实际中应根据项目数据属性筛选
+                            const cardText = card.textContent;
+                            if (cardText.includes(filterValue)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // 为卡片添加点击展开详情效果
+            projectCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('project-link')) {
+                        this.classList.toggle('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
