@@ -28,14 +28,14 @@
     </section>
 
     <div class="projects-filter">
-        <button class="filter-option active">All Projects</button>
-        <button class="filter-option">Production Management</button>
-        <button class="filter-option">Quality Systems</button>
-        <button class="filter-option">Process Optimization</button>
+        <button class="filter-option active" data-filter="all">All Projects</button>
+        <button class="filter-option" data-filter="production">Production Management</button>
+        <button class="filter-option" data-filter="quality">Quality Systems</button>
+        <button class="filter-option" data-filter="process">Process Optimization</button>
     </div>
 
     <main class="projects-container">
-        <article class="project-card">
+        <article class="project-card" data-category="production process">
             <div class="project-image">
                 <img src="img/productionline.png" alt="Production Line Optimization">
                 <span class="project-badge">Featured</span>
@@ -59,7 +59,7 @@
             </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-category="quality">
             <div class="project-image">
                 <img src="img/quality.jpg" alt="Quality Management System">
             </div>
@@ -82,7 +82,7 @@
             </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-category="production">
             <div class="project-image">
                 <img src="img/management.jpg" alt="Team Management System">
                 <span class="project-badge">Leadership</span>
@@ -106,7 +106,7 @@
             </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-category="process">
             <div class="project-image">
                 <img src="img/auto.jpg" alt="Automation System">
             </div>
@@ -129,7 +129,7 @@
             </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-category="process">
             <div class="project-image">
                 <img src="img/supply.png" alt="Supply Chain Optimization">
                 <span class="project-badge">Innovation</span>
@@ -153,7 +153,7 @@
             </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-category="quality">
             <div class="project-image">
                 <img src="img/operator.png" alt="Training System Development">
             </div>
@@ -191,30 +191,32 @@
     </footer>
 
     <script>
-        // 项目筛选功能
         document.addEventListener('DOMContentLoaded', function() {
             const filterButtons = document.querySelectorAll('.filter-option');
             const projectCards = document.querySelectorAll('.project-card');
             
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // 更新活跃按钮
+                    // 1. 移除所有按钮的 active 类，给当前点击的按钮添加 active
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // 筛选逻辑
-                    const filterValue = this.textContent;
+                    // 2. 获取当前点击按钮的 data-filter 值 (例如 "production", "quality" 或 "all")
+                    const filterValue = this.getAttribute('data-filter');
                     
+                    // 3. 遍历所有项目卡片
                     projectCards.forEach(card => {
-                        if (filterValue === 'All Projects') {
-                            card.style.display = 'block';
+                        // 获取卡片的分类 (例如 "production process")
+                        const cardCategories = card.getAttribute('data-category');
+                        
+                        // 筛选逻辑：
+                        // 如果选的是 'all'，或者卡片的分类字符串里 包含 当前筛选词
+                        if (filterValue === 'all' || cardCategories.includes(filterValue)) {
+                            // 移除 hidden 类，显示卡片
+                            card.classList.remove('hidden');
                         } else {
-                            const cardText = card.textContent;
-                            if (cardText.includes(filterValue)) {
-                                card.style.display = 'block';
-                            } else {
-                                card.style.display = 'none';
-                            }
+                            // 添加 hidden 类，隐藏卡片
+                            card.classList.add('hidden');
                         }
                     });
                 });
